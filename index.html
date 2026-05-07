@@ -10,20 +10,27 @@
 </head>
 <body>
 
-<div class="meter">
+<div class="meter" id="meter">
 
+    <!-- 目盛り -->
     <div id="ticks"></div>
 
+    <!-- 最大速度針 -->
     <div class="maxNeedle" id="maxNeedle"></div>
+
+    <!-- 現在速度針 -->
     <div class="needle" id="needle"></div>
 
+    <!-- 中心 -->
     <div class="center"></div>
 
-    <div class="speed">
+    <!-- 速度 -->
+    <div class="speedBox">
         <span id="speedText">0</span>
         <span class="unit">km/h</span>
     </div>
 
+    <!-- GPS情報 -->
     <div class="info" id="info">
         GPS待機中
     </div>
