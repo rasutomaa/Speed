@@ -1,0 +1,169 @@
+body{
+    margin:0;
+    background:#050505;
+    overflow:hidden;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    height:100vh;
+
+    font-family:sans-serif;
+}
+
+.meter{
+    width:360px;
+    height:360px;
+
+    border-radius:50%;
+
+    position:relative;
+
+    background:
+        radial-gradient(circle at center,#222 0%,#000 70%);
+
+    border:10px solid #222;
+
+    box-shadow:
+        0 0 50px rgba(0,255,255,0.15),
+        inset 0 0 40px rgba(255,255,255,0.05);
+}
+
+.needle{
+    position:absolute;
+
+    width:6px;
+    height:135px;
+
+    background:
+        linear-gradient(to top,#ff0000,#ff6666);
+
+    left:50%;
+    bottom:50%;
+
+    transform-origin:bottom center;
+
+    transform:
+        translateX(-50%)
+        rotate(-120deg);
+
+    border-radius:20px;
+
+    box-shadow:
+        0 0 20px red;
+
+    z-index:5;
+}
+
+.maxNeedle{
+    position:absolute;
+
+    width:4px;
+    height:120px;
+
+    background:
+        linear-gradient(to top,#00ffff,#66ffff);
+
+    left:50%;
+    bottom:50%;
+
+    transform-origin:bottom center;
+
+    transform:
+        translateX(-50%)
+        rotate(-120deg);
+
+    border-radius:20px;
+
+    opacity:0.9;
+
+    box-shadow:
+        0 0 15px cyan;
+
+    z-index:4;
+}
+
+.center{
+    width:24px;
+    height:24px;
+
+    border-radius:50%;
+
+    background:white;
+
+    position:absolute;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    z-index:100;
+}
+
+.speed{
+    position:absolute;
+
+    width:100%;
+    text-align:center;
+
+    bottom:70px;
+
+    color:white;
+
+    font-size:54px;
+    font-weight:bold;
+}
+
+.unit{
+    font-size:22px;
+    opacity:0.7;
+}
+
+.info{
+    position:absolute;
+
+    bottom:28px;
+
+    width:100%;
+
+    text-align:center;
+
+    color:#888;
+
+    font-size:14px;
+}
+
+.tick{
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    color:white;
+
+    font-size:18px;
+    font-weight:bold;
+
+    transform-origin:center center;
+
+    text-shadow:
+        0 0 8px rgba(255,255,255,0.6);
+}
+
+.smallTick{
+    position:absolute;
+
+    width:4px;
+    height:18px;
+
+    background:white;
+
+    left:50%;
+    top:50%;
+
+    transform-origin:center -135px;
+
+    opacity:0.8;
+}
