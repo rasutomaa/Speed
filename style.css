@@ -1,23 +1,32 @@
 body{
-    margin:0;
-    background:#000;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    margin:0;
 
     width:100vw;
     height:100vh;
 
     overflow:hidden;
 
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:#000;
+
     font-family:sans-serif;
 }
 
+/* =========================
+   メーター
+========================= */
+
 .meter{
 
-    width:360px;
-    height:360px;
+    width:min(90vw, 90vh);
+    height:min(90vw, 90vh);
+
+    max-width:420px;
+    max-height:420px;
 
     border-radius:50%;
 
@@ -28,11 +37,11 @@ body{
         #111 0%,
         #000 75%);
 
-    border:10px solid #2a2a2a;
+    border:10px solid #222;
 
     box-shadow:
         0 0 40px rgba(0,255,255,0.15),
-        inset 0 0 30px rgba(255,255,255,0.05);
+        inset 0 0 40px rgba(255,255,255,0.05);
 }
 
 /* =========================
@@ -44,7 +53,7 @@ body{
     position:absolute;
 
     width:6px;
-    height:130px;
+    height:36%;
 
     left:50%;
     bottom:50%;
@@ -65,7 +74,7 @@ body{
 }
 
 /* =========================
-   最高速度針
+   最大速度針
 ========================= */
 
 .maxNeedle{
@@ -73,7 +82,7 @@ body{
     position:absolute;
 
     width:4px;
-    height:115px;
+    height:32%;
 
     left:50%;
     bottom:50%;
@@ -83,11 +92,35 @@ body{
     background:
         linear-gradient(to top,
         cyan,
-        #8fffff);
+        #9fffff);
 
     border-radius:20px;
 
-    opacity:0.9;
-
     box-shadow:
         0 0 15px cyan;
+
+    opacity:0.9;
+
+    z-index:4;
+}
+
+/* =========================
+   中心
+========================= */
+
+.center{
+
+    position:absolute;
+
+    width:24px;
+    height:24px;
+
+    background:white;
+
+    border-radius:50%;
+
+    left:50%;
+    top:50%;
+
+    transform:
+        translate(-
