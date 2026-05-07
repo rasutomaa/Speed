@@ -1,3 +1,6 @@
+const meter =
+    document.getElementById("meter");
+
 const needle =
     document.getElementById("needle");
 
@@ -18,62 +21,102 @@ let lastTime = null;
 
 let targetSpeed = 0;
 let displaySpeed = 0;
+
 let maxSpeed = 0;
 
-// =======================
+// =========================
 // 文字盤生成
-// =======================
+// =========================
 
-// 数字
-for(let i = 0; i <= 240; i += 20){
+function createMeter(){
 
-    const angle =
-        -120 + (i / 240) * 240;
+    ticks.innerHTML = "";
 
-    const rad =
-        angle * Math.PI / 180;
+    const meterSize =
+        meter.offsetWidth;
 
-    const radius = 140;
+    // 数字半径
+    const textRadius =
+        meterSize * 0.34;
 
-    const x =
-        Math.cos(rad) * radius;
+    // 小目盛り半径
+    const tickRadius =
+        meterSize * 0.41;
 
-    const y =
-        Math.sin(rad) * radius;
+    // =====================
+    // 数字
+    // =====================
 
-    const label =
-        document.createElement("div");
+    for(let i = 0; i <= 240; i += 20){
 
-    label.className = "tick";
+        const angle =
+            -120 + (i / 240) * 240;
 
-    label.innerText = i;
+        const rad =
+            angle * Math.PI / 180;
 
-    label.style.transform =
-        `translate(${x}px, ${y}px)`;
+        const x =
+            Math.cos(rad) * textRadius;
 
-    ticks.appendChild(label);
+        const y =
+            Math.sin(rad) * textRadius;
+
+        const label =
+            document.createElement("div");
+
+        label.className = "tick";
+
+        label.innerText = i;
+
+        label.style.transform =
+            `translate(-50%, -50%)
+             translate(${x}px, ${y}px)`;
+
+        ticks.appendChild(label);
+    }
+
+    // =====================
+    // 小目盛り
+    // =====================
+
+    for(let i = 0; i <= 240; i += 10){
+
+        const angle =
+            -120 + (i / 240) * 240;
+
+        const rad =
+            angle * Math.PI / 180;
+
+        const x =
+            Math.cos(rad) * tickRadius;
+
+        const y =
+            Math.sin(rad) * tickRadius;
+
+        const tick =
+            document.createElement("div");
+
+        tick.className = "smallTick";
+
+        tick.style.transform =
+            `translate(-50%, -50%)
+             translate(${x}px, ${y}px)
+             rotate(${angle + 90}deg)`;
+
+        ticks.appendChild(tick);
+    }
 }
 
-// 小目盛り
-for(let i = 0; i <= 240; i += 10){
+createMeter();
 
-    const tick =
-        document.createElement("div");
+window.addEventListener(
+    "resize",
+    createMeter
+);
 
-    tick.className = "smallTick";
-
-    const angle =
-        -120 + (i / 240) * 240;
-
-    tick.style.transform =
-        `translate(-50%, -50%) rotate(${angle}deg)`;
-
-    ticks.appendChild(tick);
-}
-
-// =======================
+// =========================
 // 距離計算
-// =======================
+// =========================
 
 function toRad(v){
     return v * Math.PI / 180;
@@ -83,24 +126,30 @@ function distance(lat1, lon1, lat2, lon2){
 
     const R = 6371000;
 
-    const dLat = toRad(lat2-lat1);
-    const dLon = toRad(lon2-lon1);
+    const dLat =
+        toRad(lat2 - lat1);
+
+    const dLon =
+        toRad(lon2 - lon1);
 
     const a =
-        Math.sin(dLat/2)**2 +
+        Math.sin(dLat / 2) ** 2 +
+
         Math.cos(toRad(lat1)) *
         Math.cos(toRad(lat2)) *
-        Math.sin(dLon/2)**2;
 
-    return R * 2 * Math.atan2(
-        Math.sqrt(a),
-        Math.sqrt(1-a)
-    );
+        Math.sin(dLon / 2) ** 2;
+
+    return R * 2 *
+        Math.atan2(
+            Math.sqrt(a),
+            Math.sqrt(1 - a)
+        );
 }
 
-// =======================
+// =========================
 // GPS取得
-// =======================
+// =========================
 
 navigator.geolocation.watchPosition(
 
@@ -157,10 +206,10 @@ navigator.geolocation.watchPosition(
 
 (error)=>{
 
+    console.log(error);
+
     info.innerText =
         "GPS取得失敗";
-
-    console.log(error);
 
 },
 
@@ -170,9 +219,9 @@ navigator.geolocation.watchPosition(
     timeout:5000
 });
 
-// =======================
+// =========================
 // アニメーション
-// =======================
+// =========================
 
 function animate(){
 
@@ -180,26 +229,30 @@ function animate(){
     displaySpeed +=
         (targetSpeed - displaySpeed) * 0.08;
 
-    // 最高速度記録
+    // 最大速度更新
     if(displaySpeed > maxSpeed){
         maxSpeed = displaySpeed;
     }
 
-    // 現在速度針
+    // 現在速度角度
     const angle =
-        -120 + (displaySpeed / 240) * 240;
+        -120 +
+        (displaySpeed / 240) * 240;
 
     needle.style.transform =
-        `translateX(-50%) rotate(${angle}deg)`;
+        `translateX(-50%)
+         rotate(${angle}deg)`;
 
-    // 最高速度針
+    // 最大速度角度
     const maxAngle =
-        -120 + (maxSpeed / 240) * 240;
+        -120 +
+        (maxSpeed / 240) * 240;
 
     maxNeedle.style.transform =
-        `translateX(-50%) rotate(${maxAngle}deg)`;
+        `translateX(-50%)
+         rotate(${maxAngle}deg)`;
 
-    // 数値
+    // 数値更新
     speedText.innerText =
         Math.round(displaySpeed);
 
